@@ -6,6 +6,7 @@ public class Reference_Guide_Function {
 	private String name;
 	private String short_solution;
 	private String long_solution;
+	private String note;
 	private String reference_guide_category;
 	private User created_by;
 	private String created_on;
@@ -14,13 +15,14 @@ public class Reference_Guide_Function {
 	
 	public Reference_Guide_Function() {
 	}
-	public Reference_Guide_Function(Integer id, String name, String short_solution, String long_solution,
+	public Reference_Guide_Function(Integer id, String name, String short_solution, String long_solution, String note,
 			String reference_guide_category, User created_by, String created_on, User updated_by, String updated_on) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.short_solution = short_solution;
 		this.long_solution = long_solution;
+		this.note = note;
 		this.reference_guide_category = reference_guide_category;
 		this.created_by = created_by;
 		this.created_on = created_on;
@@ -81,11 +83,17 @@ public class Reference_Guide_Function {
 	public void setUpdated_on(String updated_on) {
 		this.updated_on = updated_on;
 	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	@Override
 	public String toString() {
 		return "Reference_Guide_Function [id=" + id + ", name=" + name + ", short_solution=" + short_solution
-				+ ", long_solution=" + long_solution + ", reference_guide_category=" + reference_guide_category
-				+ ", created_by=" + created_by + ", created_on=" + created_on + ", updated_by=" + updated_by
-				+ ", updated_on=" + updated_on + "]";
+				+ ", long_solution=" + long_solution + ", note=" + note + ", reference_guide_category="
+				+ reference_guide_category + ", created_by=" + created_by + ", created_on=" + created_on
+				+ ", updated_by=" + updated_by + ", updated_on=" + updated_on + "]";
 	}
 }
