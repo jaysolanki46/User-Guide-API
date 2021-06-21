@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### DB Config File ###
+src/main/java/com/skyzer/server/main/DBConfig.java

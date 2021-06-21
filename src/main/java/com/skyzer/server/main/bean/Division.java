@@ -4,11 +4,11 @@ public class Division {
 
 	private Integer id;
 	private Integer division;
-	private Integer dealer_name;
+	private String dealer_name;
 	
 	public Division() {
 	}
-	public Division(Integer id, Integer division, Integer dealer_name) {
+	public Division(Integer id, Integer division, String dealer_name) {
 		super();
 		this.id = id;
 		this.division = division;
@@ -26,10 +26,10 @@ public class Division {
 	public void setDivision(Integer division) {
 		this.division = division;
 	}
-	public Integer getDealer_name() {
+	public String getDealer_name() {
 		return dealer_name;
 	}
-	public void setDealer_name(Integer dealer_name) {
+	public void setDealer_name(String dealer_name) {
 		this.dealer_name = dealer_name;
 	}
 	@Override
