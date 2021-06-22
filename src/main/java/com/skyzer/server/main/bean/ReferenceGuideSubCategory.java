@@ -1,18 +1,18 @@
 package com.skyzer.server.main.bean;
 
-public class Reference_Guide_Sub_Category {
+public class ReferenceGuideSubCategory {
 
 	private Integer id;
 	private String name;
-	private Reference_Guide_Category reference_guide_category;
+	private ReferenceGuideCategory reference_guide_category;
 	private User created_by;
 	private String created_on;
 	private User updated_by;
 	private String updated_on;
 	
-	public Reference_Guide_Sub_Category() {
+	public ReferenceGuideSubCategory() {
 	}
-	public Reference_Guide_Sub_Category(Integer id, String name, Reference_Guide_Category reference_guide_category, User created_by,
+	public ReferenceGuideSubCategory(Integer id, String name, ReferenceGuideCategory reference_guide_category, User created_by,
 			String created_on, User updated_by, String updated_on) {
 		super();
 		this.id = id;
@@ -35,10 +35,10 @@ public class Reference_Guide_Sub_Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Reference_Guide_Category getReference_guide_category() {
+	public ReferenceGuideCategory getReference_guide_category() {
 		return reference_guide_category;
 	}
-	public void setReference_guide_category(Reference_Guide_Category reference_guide_category) {
+	public void setReference_guide_category(ReferenceGuideCategory reference_guide_category) {
 		this.reference_guide_category = reference_guide_category;
 	}
 	public User getCreated_by() {

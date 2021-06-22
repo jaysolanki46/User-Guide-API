@@ -1,6 +1,6 @@
 package com.skyzer.server.main.bean;
 
-public class Reference_Guide_Category {
+public class ReferenceGuideCategory {
 
 	private Integer id;
 	private String name;
@@ -9,9 +9,9 @@ public class Reference_Guide_Category {
 	private User updated_by;
 	private String updated_on;
 	
-	public Reference_Guide_Category() {
+	public ReferenceGuideCategory() {
 	}
-	public Reference_Guide_Category(Integer id, String name, User created_by, String created_on, User updated_by,
+	public ReferenceGuideCategory(Integer id, String name, User created_by, String created_on, User updated_by,
 			String updated_on) {
 		super();
 		this.id = id;

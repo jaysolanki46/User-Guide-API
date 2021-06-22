@@ -1,6 +1,6 @@
 package com.skyzer.server.main.bean;
 
-public class Reference_Guide_Function {
+public class ReferenceGuideFunction {
 
 	private Integer id;
 	private String name;
@@ -13,9 +13,9 @@ public class Reference_Guide_Function {
 	private User updated_by;
 	private String updated_on;
 	
-	public Reference_Guide_Function() {
+	public ReferenceGuideFunction() {
 	}
-	public Reference_Guide_Function(Integer id, String name, String short_solution, String long_solution, String note,
+	public ReferenceGuideFunction(Integer id, String name, String short_solution, String long_solution, String note,
 			String reference_guide_category, User created_by, String created_on, User updated_by, String updated_on) {
 		super();
 		this.id = id;
