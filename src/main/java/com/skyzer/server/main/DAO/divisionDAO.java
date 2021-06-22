@@ -34,8 +34,8 @@ public class divisionDAO {
 			rs = st.executeQuery("select * from divisions");
 			
 			while (rs.next()) {
-				Division division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
-				divisions.add(division);
+				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+				divisions.add(this.division);
 			}
 
 			return divisions;
@@ -60,9 +60,9 @@ public class divisionDAO {
 			rs = ps.executeQuery();
 			
 			if (rs.next()) 
-				division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
 
-			return division;
+			return this.division;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,11 +85,11 @@ public class divisionDAO {
 			rs = ps.getGeneratedKeys();
 			
 			if (rs.next()) {
-				division = new Division();
-				division.setId(rs.getInt(1));
+				this.division = new Division();
+				this.division.setId(rs.getInt(1));
 			}
 
-			return division;
+			return this.division;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,5 +120,29 @@ public class divisionDAO {
 			cnn.close();
 		}
 		return false;
+	}
+	
+	public Division findByDivision(Integer division) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			
+			ps = cnn.prepareStatement("select * from divisions where division = ?");
+			ps.setInt(1, division);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) 
+				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+
+			return this.division;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cnn.close();
+		}
+		
+		return null;
 	}
 }

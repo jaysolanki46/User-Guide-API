@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.skyzer.server.main.DAO.divisionDAO;
-import com.skyzer.server.main.bean.Division;
+import com.skyzer.server.main.DAO.userDAO;
+import com.skyzer.server.main.bean.User;
 
 @RestController
-public class DivisionController {
+public class UserController {
 
 	@Autowired
-	private divisionDAO divisionDAO;
+	private userDAO userDAO;
 	
-	@GetMapping("skyzer-guide/divisions")
-	public ResponseEntity<List<Division>> getAllDivisions() {
+	@GetMapping("skyzer-guide/users")
+	public ResponseEntity<List<User>> getAllUsers() {
 		
 		try {
-			List<Division> divisions = divisionDAO.findAll();
-			if(divisions.isEmpty() || divisions == null) {
+			List<User> users = userDAO.findAll();
+			if(users.isEmpty() || users == null) {
 				return ResponseEntity.noContent().header("Content-Length", "0").build();
 			} else {
-				return new ResponseEntity<>(divisions, HttpStatus.OK);
+				return new ResponseEntity<>(users, HttpStatus.OK);
 			}
 			
 		} catch (Exception e) {
@@ -37,27 +37,27 @@ public class DivisionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/divisions/{id}")
-	public ResponseEntity<Division> getDivision(@PathVariable Integer id) {
+	@GetMapping("skyzer-guide/users/{id}")
+	public ResponseEntity<User> getUser(@PathVariable Integer id) {
 		
 		try {
-			Division division = divisionDAO.find(id);
+			User user = userDAO.find(id);
 
-			if(division == null) return new ResponseEntity<>(division, HttpStatus.NOT_FOUND);
-			else return new ResponseEntity<>(division, HttpStatus.OK);
+			if(user == null) return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>(user, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/divisions")
-	public ResponseEntity<Division> createDivision(@RequestBody Division division) {
+	@PostMapping("skyzer-guide/users")
+	public ResponseEntity<User> createUser(@RequestBody User user) {
 	 	
 	 	try {
-	 		Division newDivision =	divisionDAO.create(division);
+	 		User newUser =	userDAO.create(user);
 	 		
-	 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newDivision.getId()).toUri();
+	 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
 		 	return ResponseEntity.created(location).build();
 	 		
 		} catch (Exception e) {
@@ -65,10 +65,10 @@ public class DivisionController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/divisions/{id}")
-	public ResponseEntity<Object> deleteDivision(@PathVariable Integer id) {
+	@DeleteMapping("skyzer-guide/users/{id}")
+	public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
 		try {
-	 		boolean isDeleted =	divisionDAO.delete(id);
+	 		boolean isDeleted =	userDAO.delete(id);
 	 		
 	 		if(!isDeleted) return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
 			else return new ResponseEntity<>("", HttpStatus.OK); 
