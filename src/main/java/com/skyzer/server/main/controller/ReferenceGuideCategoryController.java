@@ -2,7 +2,6 @@ package com.skyzer.server.main.controller;
 
 import java.net.URI;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class ReferenceGuideCategoryController {
 	private referenceGuideCategoryDAO referenceGuideCategoryDAO;
 	
 	@GetMapping("skyzer-guide/referenceGuideCategories")
-	public ResponseEntity<List<ReferenceGuideCategory>> getAllUsers() {
+	public ResponseEntity<List<ReferenceGuideCategory>> getAllReferenceGuideCategories() {
 		
 		try {
 			List<ReferenceGuideCategory> referenceGuideCategories = referenceGuideCategoryDAO.findAll();
@@ -39,7 +38,7 @@ public class ReferenceGuideCategoryController {
 	}
 	
 	@GetMapping("skyzer-guide/referenceGuideCategories/{id}")
-	public ResponseEntity<ReferenceGuideCategory> getUser(@PathVariable Integer id) {
+	public ResponseEntity<ReferenceGuideCategory> getReferenceGuideCategory(@PathVariable Integer id) {
 		
 		try {
 			ReferenceGuideCategory referenceGuideCategory = referenceGuideCategoryDAO.find(id);
@@ -66,7 +65,7 @@ public class ReferenceGuideCategoryController {
 		}
 	*/
 	@PostMapping("skyzer-guide/referenceGuideCategories")
-	public ResponseEntity<ReferenceGuideCategory> createUser(@RequestBody ReferenceGuideCategory referenceGuideCategory) {
+	public ResponseEntity<ReferenceGuideCategory> createReferenceGuideCategory(@RequestBody ReferenceGuideCategory referenceGuideCategory) {
 	 	
 	 	try {
 	 		ReferenceGuideCategory newReferenceGuideCategory = referenceGuideCategoryDAO.create(referenceGuideCategory);
@@ -80,7 +79,7 @@ public class ReferenceGuideCategoryController {
 	}
 	
 	@DeleteMapping("skyzer-guide/referenceGuideCategories/{id}")
-	public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
+	public ResponseEntity<Object> deleteReferenceGuideCategory(@PathVariable Integer id) {
 		try {
 	 		boolean isDeleted =	referenceGuideCategoryDAO.delete(id);
 	 		
