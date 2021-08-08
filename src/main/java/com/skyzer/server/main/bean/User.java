@@ -3,24 +3,34 @@ package com.skyzer.server.main.bean;
 public class User {
 
 	private Integer id;
+	private String image;
 	private String username;
 	private String password;
 	private Division division;
 	
 	public User() {
 	}
-	public User(Integer id, String username, String password, Division division) {
+
+	public Integer getId() {
+		return id;
+	}
+	public User(Integer id, String image, String username, String password, Division division) {
 		super();
 		this.id = id;
+		this.image = image;
 		this.username = username;
 		this.password = password;
 		this.division = division;
 	}
-	public Integer getId() {
-		return id;
-	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	public String getUsername() {
 		return username;
@@ -42,6 +52,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", division=" + division + "]";
+		return "User [id=" + id + ", image=" + image + ", username=" + username + ", password=" + password
+				+ ", division=" + division + "]";
 	}
 }
