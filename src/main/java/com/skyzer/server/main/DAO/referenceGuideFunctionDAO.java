@@ -25,8 +25,6 @@ public class referenceGuideFunctionDAO {
 	private Integer deleteStatus;
 	
 	@Autowired
-	private referenceGuideCategoryDAO referenceGuideCategoryDAO;
-	@Autowired
 	private userDAO userDAO;
 	
 	public List<ReferenceGuideFunction> findAll() throws SQLException {
@@ -46,7 +44,10 @@ public class referenceGuideFunctionDAO {
 				this.referenceGuideFunction.setShort_solution(rs.getString("short_solution"));
 				this.referenceGuideFunction.setLong_solution(rs.getString("long_solution"));
 				this.referenceGuideFunction.setNote(rs.getString("note"));
-				this.referenceGuideFunction.setReference_guide_category(referenceGuideCategoryDAO.find(rs.getInt("reference_guide_category")));
+				this.referenceGuideFunction.setIs_telium(rs.getBoolean("is_telium"));
+				this.referenceGuideFunction.setIs_tetra(rs.getBoolean("is_tetra"));
+				this.referenceGuideFunction.setIs_function(rs.getBoolean("is_function"));
+				this.referenceGuideFunction.setIs_menu(rs.getBoolean("is_menu"));
 				this.referenceGuideFunction.setCreated_by(userDAO.find(rs.getInt("created_by")));
 				this.referenceGuideFunction.setCreated_on(rs.getString("created_on"));
 				this.referenceGuideFunction.setUpdated_by(userDAO.find(rs.getInt("updated_by")));
@@ -83,7 +84,10 @@ public class referenceGuideFunctionDAO {
 				this.referenceGuideFunction.setShort_solution("short_solution");
 				this.referenceGuideFunction.setLong_solution("long_solution");
 				this.referenceGuideFunction.setNote("note");
-				this.referenceGuideFunction.setReference_guide_category(referenceGuideCategoryDAO.find(rs.getInt("reference_guide_category")));
+				this.referenceGuideFunction.setIs_telium(rs.getBoolean("is_telium"));
+				this.referenceGuideFunction.setIs_tetra(rs.getBoolean("is_tetra"));
+				this.referenceGuideFunction.setIs_function(rs.getBoolean("is_function"));
+				this.referenceGuideFunction.setIs_menu(rs.getBoolean("is_menu"));
 				this.referenceGuideFunction.setCreated_by(userDAO.find(rs.getInt("created_by")));
 				this.referenceGuideFunction.setCreated_on(rs.getString("created_on"));
 				this.referenceGuideFunction.setUpdated_by(userDAO.find(rs.getInt("updated_by")));
@@ -106,16 +110,19 @@ public class referenceGuideFunctionDAO {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("insert into reference_guide_functions (name, short_solution, long_solution, note, reference_guide_category, created_by, created_on, updated_by) "
-					+ "values (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			ps = cnn.prepareStatement("insert into reference_guide_functions (name, short_solution, long_solution, note, is_telium, is_tetra, is_function, is_menu, created_by, created_on, updated_by) "
+					+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, referenceGuideFunction.getName());
 			ps.setString(2, referenceGuideFunction.getShort_solution());
 			ps.setString(3, referenceGuideFunction.getLong_solution());
 			ps.setString(4, referenceGuideFunction.getNote());
-			ps.setInt(5, referenceGuideFunction.getReference_guide_category().getId());
-			ps.setInt(6, referenceGuideFunction.getCreated_by().getId());
-			ps.setString(7, referenceGuideFunction.getCreated_on());
-			ps.setInt(8, referenceGuideFunction.getUpdated_by().getId());
+			ps.setBoolean(5,  referenceGuideFunction.getIs_telium());
+			ps.setBoolean(6,  referenceGuideFunction.getIs_tetra());
+			ps.setBoolean(7,  referenceGuideFunction.getIs_function());
+			ps.setBoolean(8,  referenceGuideFunction.getIs_menu());
+			ps.setInt(9, referenceGuideFunction.getCreated_by().getId());
+			ps.setString(10, referenceGuideFunction.getCreated_on());
+			ps.setInt(11, referenceGuideFunction.getUpdated_by().getId());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			
