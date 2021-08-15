@@ -74,7 +74,7 @@ public class userDAO {
 				this.user.setId(rs.getInt("id"));
 				this.user.setImage(rs.getString("image"));
 				this.user.setUsername(rs.getString("username"));
-				this.user.setPassword("***");
+				this.user.setPassword(rs.getString("pass"));
 				this.user.setDivision(divisionDAO.find(rs.getInt("division")));
 			}
 

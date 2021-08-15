@@ -1,10 +1,13 @@
 package com.skyzer.server.main.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User {
 
 	private Integer id;
 	private String image;
 	private String username;
+	@JsonIgnore
 	private String password;
 	private Division division;
 	
