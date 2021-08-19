@@ -15,12 +15,13 @@ public class ReferenceGuideFunction {
 	private String created_on;
 	private User updated_by;
 	private String updated_on;
+	private Boolean is_favorite;
 	
 	public ReferenceGuideFunction() {
 	}
 	public ReferenceGuideFunction(Integer id, String name, String short_solution, String long_solution, String note,
 			Boolean is_telium, Boolean is_tetra, Boolean is_function, Boolean is_menu, User created_by,
-			String created_on, User updated_by, String updated_on) {
+			String created_on, User updated_by, String updated_on, Boolean is_favorite) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -35,6 +36,7 @@ public class ReferenceGuideFunction {
 		this.created_on = created_on;
 		this.updated_by = updated_by;
 		this.updated_on = updated_on;
+		this.is_favorite = is_favorite;
 	}
 	public Integer getId() {
 		return id;
@@ -114,11 +116,18 @@ public class ReferenceGuideFunction {
 	public void setUpdated_on(String updated_on) {
 		this.updated_on = updated_on;
 	}
+	public Boolean getIs_favorite() {
+		return is_favorite;
+	}
+	public void setIs_favorite(Boolean is_favorite) {
+		this.is_favorite = is_favorite;
+	}
 	@Override
 	public String toString() {
 		return "ReferenceGuideFunction [id=" + id + ", name=" + name + ", short_solution=" + short_solution
 				+ ", long_solution=" + long_solution + ", note=" + note + ", is_telium=" + is_telium + ", is_tetra="
 				+ is_tetra + ", is_function=" + is_function + ", is_menu=" + is_menu + ", created_by=" + created_by
-				+ ", created_on=" + created_on + ", updated_by=" + updated_by + ", updated_on=" + updated_on + "]";
+				+ ", created_on=" + created_on + ", updated_by=" + updated_by + ", updated_on=" + updated_on
+				+ ", is_favorite=" + is_favorite + "]";
 	}
 }

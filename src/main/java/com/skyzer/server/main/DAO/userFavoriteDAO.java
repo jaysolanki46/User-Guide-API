@@ -102,6 +102,7 @@ public class userFavoriteDAO {
 			if (rs.next()) {
 				this.userFavorite = new UserFavorite();
 				this.userFavorite.setId(rs.getInt(1));
+				this.userFavorite.setUser(userFavorite.getUser());
 			}
 
 			return this.userFavorite;

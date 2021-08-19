@@ -13,10 +13,6 @@ public class User {
 	
 	public User() {
 	}
-
-	public Integer getId() {
-		return id;
-	}
 	public User(Integer id, String image, String username, String password, Division division) {
 		super();
 		this.id = id;
@@ -24,6 +20,13 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.division = division;
+	}
+	public User(Integer id) {
+		super();
+		this.id = id;
+	}
+	public Integer getId() {
+		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;

@@ -1,6 +1,5 @@
 package com.skyzer.server.main.controller;
 
-import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import com.skyzer.server.main.DAO.referenceGuideFunctionDAO;
 import com.skyzer.server.main.DAO.userFavoriteDAO;
+import com.skyzer.server.main.bean.ReferenceGuideFunction;
 import com.skyzer.server.main.bean.UserFavorite;
 
 @RestController
@@ -20,6 +20,9 @@ public class UserFavoriteController {
 
 	@Autowired
 	private userFavoriteDAO userFavoriteDAO;
+	
+	@Autowired
+	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
 	@GetMapping("skyzer-guide/userFavorites")
 	public ResponseEntity<List<UserFavorite>> getAllUserFavorites() {
@@ -52,14 +55,20 @@ public class UserFavoriteController {
 	}
 	
 	@PostMapping("skyzer-guide/userFavorites")
-	public ResponseEntity<UserFavorite> createUserFavorite(@RequestBody UserFavorite userFavorite) {
+	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavorite(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
 	 		UserFavorite newUserFavorite =	userFavoriteDAO.create(userFavorite);
 	 		
-	 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUserFavorite.getId()).toUri();
-		 	return ResponseEntity.created(location).build();
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllByUser(newUserFavorite.getUser().getId());
 	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 

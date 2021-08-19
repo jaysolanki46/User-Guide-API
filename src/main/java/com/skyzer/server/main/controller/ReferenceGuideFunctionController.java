@@ -37,6 +37,23 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
+	@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
+		
+		try {
+			List<ReferenceGuideFunction> referenceGuideFunctions = 
+									referenceGuideFunctionDAO.findAllByUser(userId);
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
 	@GetMapping("skyzer-guide/referenceGuideFunctions/{id}")
 	public ResponseEntity<ReferenceGuideFunction> getReferenceGuideFunction(@PathVariable Integer id) {
 		

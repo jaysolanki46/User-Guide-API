@@ -163,4 +163,51 @@ public class referenceGuideFunctionDAO {
 		}
 		return false;
 	}
+
+	public List<ReferenceGuideFunction> findAllByUser(Integer userId) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			st = cnn.createStatement();
+			referenceGuideFunctions = new ArrayList<ReferenceGuideFunction>();
+			
+			ps = cnn.prepareStatement("SELECT reference_guide_functions.*, "
+										+ "CASE WHEN user_favorites.id IS NULL THEN 0 ELSE 1 END AS is_favourite "
+										+ "FROM reference_guide_functions LEFT JOIN user_favorites "
+										+ "on reference_guide_functions.id = user_favorites.favorite_reference_guide_function "
+										+ "and user_favorites.user = ? group by reference_guide_functions.id");
+			ps.setInt(1, userId);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				this.referenceGuideFunction = new ReferenceGuideFunction();
+				this.referenceGuideFunction.setId(rs.getInt("id"));
+				this.referenceGuideFunction.setName(rs.getString("name"));
+				this.referenceGuideFunction.setShort_solution(rs.getString("short_solution"));
+				this.referenceGuideFunction.setLong_solution(rs.getString("long_solution"));
+				this.referenceGuideFunction.setNote(rs.getString("note"));
+				this.referenceGuideFunction.setIs_telium(rs.getBoolean("is_telium"));
+				this.referenceGuideFunction.setIs_tetra(rs.getBoolean("is_tetra"));
+				this.referenceGuideFunction.setIs_function(rs.getBoolean("is_function"));
+				this.referenceGuideFunction.setIs_menu(rs.getBoolean("is_menu"));
+				this.referenceGuideFunction.setCreated_by(userDAO.find(rs.getInt("created_by")));
+				this.referenceGuideFunction.setCreated_on(rs.getString("created_on"));
+				this.referenceGuideFunction.setUpdated_by(userDAO.find(rs.getInt("updated_by")));
+				this.referenceGuideFunction.setUpdated_on(rs.getString("updated_on"));
+				this.referenceGuideFunction.setIs_favorite(rs.getBoolean("is_favourite"));
+				
+				referenceGuideFunctions.add(this.referenceGuideFunction);
+			}
+
+			return referenceGuideFunctions;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cnn.close();
+		}
+		
+		return null;
+	}
 }
