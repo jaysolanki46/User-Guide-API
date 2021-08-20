@@ -24,38 +24,8 @@ public class UserFavoriteController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	@GetMapping("skyzer-guide/userFavorites")
-	public ResponseEntity<List<UserFavorite>> getAllUserFavorites() {
-		
-		try {
-			List<UserFavorite> userFavorites = userFavoriteDAO.findAll();
-			if(userFavorites.isEmpty() || userFavorites == null) {
-				return ResponseEntity.noContent().header("Content-Length", "0").build();
-			} else {
-				return new ResponseEntity<>(userFavorites, HttpStatus.OK);
-			}
-			
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
-		} 
-	}
-	
-	@GetMapping("skyzer-guide/userFavorites/{id}")
-	public ResponseEntity<UserFavorite> getUserFavorite(@PathVariable Integer id) {
-		
-		try {
-			UserFavorite userFavorite = userFavoriteDAO.find(id);
-
-			if(userFavorite == null) return new ResponseEntity<>(userFavorite, HttpStatus.NOT_FOUND);
-			else return new ResponseEntity<>(userFavorite, HttpStatus.OK);
-			
-		} catch (Exception e) {
-			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
-		} 
-	}
-	
-	@PostMapping("skyzer-guide/userFavorites")
-	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavorite(@RequestBody UserFavorite userFavorite) {
+	@PostMapping("skyzer-guide/userFavorites/all")
+	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromAllList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
 	 		UserFavorite newUserFavorite =	userFavoriteDAO.create(userFavorite);
@@ -74,14 +44,61 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/{id}")
-	public ResponseEntity<Object> deleteUserFavorite(@PathVariable Integer id) {
-		try {
-	 		boolean isDeleted =	userFavoriteDAO.delete(id);
+	@DeleteMapping("skyzer-guide/userFavorites/all")
+	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromAllList(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		UserFavorite deletedUserFavorite =	userFavoriteDAO.delete(userFavorite);
 	 		
-	 		if(!isDeleted) return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
-			else return new ResponseEntity<>("", HttpStatus.OK); 
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllByUser(deletedUserFavorite.getUser().getId());
 	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+
+	@PostMapping("skyzer-guide/userFavorites/favorites")
+	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		UserFavorite newUserFavorite =	userFavoriteDAO.create(userFavorite);
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllFavoritesByUser(newUserFavorite.getUser().getId());
+	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@DeleteMapping("skyzer-guide/userFavorites/favorites")
+	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		UserFavorite deletedUserFavorite =	userFavoriteDAO.delete(userFavorite);
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllFavoritesByUser(deletedUserFavorite.getUser().getId());
+	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 

@@ -21,11 +21,12 @@ public class ReferenceGuideFunctionController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions")
-	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctions() {
+	@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
-			List<ReferenceGuideFunction> referenceGuideFunctions = referenceGuideFunctionDAO.findAll();
+			List<ReferenceGuideFunction> referenceGuideFunctions = 
+									referenceGuideFunctionDAO.findAllByUser(userId);
 			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
 				return ResponseEntity.noContent().header("Content-Length", "0").build();
 			} else {
@@ -37,12 +38,28 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
-	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
+	@GetMapping("skyzer-guide/referenceGuideFunctions/favorite/user/{userId}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllFavoritesReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
 			List<ReferenceGuideFunction> referenceGuideFunctions = 
-									referenceGuideFunctionDAO.findAllByUser(userId);
+									referenceGuideFunctionDAO.findAllFavoritesByUser(userId);
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@GetMapping("skyzer-guide/referenceGuideFunctions")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctions() {
+		
+		try {
+			List<ReferenceGuideFunction> referenceGuideFunctions = referenceGuideFunctionDAO.findAll();
 			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
 				return ResponseEntity.noContent().header("Content-Length", "0").build();
 			} else {

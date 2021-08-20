@@ -115,26 +115,27 @@ public class userFavoriteDAO {
 		return null;
 	}
 	
-	public boolean delete(Integer id) throws SQLException {
+	public UserFavorite delete(UserFavorite userFavorite) throws SQLException {
+		
 		try {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("delete from user_favorites where id = ?");
-			ps.setInt(1, id);
+			ps = cnn.prepareStatement("delete from user_favorites where user = ? and favorite_reference_guide_function = ?");
+			ps.setInt(1, userFavorite.getUser().getId());
+			ps.setInt(2, userFavorite.getFavorite_reference_guide_function().getId());
 			deleteStatus = ps.executeUpdate();
 			
-			if(deleteStatus == 1) {
-				return true;
-			} else {
-				return false;
-			}
+			this.userFavorite = new UserFavorite();
+			this.userFavorite.setUser(userFavorite.getUser());
+			
+			return this.userFavorite;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			cnn.close();
 		}
-		return false;
+		return null;
 	}
 }
