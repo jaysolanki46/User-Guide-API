@@ -239,10 +239,6 @@ public class referenceGuideFunctionDAO {
 				this.referenceGuideFunction.setIs_tetra(rs.getBoolean("is_tetra"));
 				this.referenceGuideFunction.setIs_function(rs.getBoolean("is_function"));
 				this.referenceGuideFunction.setIs_menu(rs.getBoolean("is_menu"));
-				//this.referenceGuideFunction.setCreated_by(userDAO.find(rs.getInt("created_by")));
-				this.referenceGuideFunction.setCreated_on(rs.getString("created_on"));
-				//this.referenceGuideFunction.setUpdated_by(userDAO.find(rs.getInt("updated_by")));
-				this.referenceGuideFunction.setUpdated_on(rs.getString("updated_on"));
 				this.referenceGuideFunction.setIs_favorite(rs.getBoolean("is_favourite"));
 				
 				referenceGuideFunctions.add(this.referenceGuideFunction);

@@ -1,5 +1,7 @@
 package com.skyzer.server.main.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ReferenceGuideFunction {
 
 	private Integer id;
@@ -11,9 +13,13 @@ public class ReferenceGuideFunction {
 	private Boolean is_tetra;
 	private Boolean is_function;
 	private Boolean is_menu;
+	@JsonIgnore
 	private User created_by;
+	@JsonIgnore
 	private String created_on;
+	@JsonIgnore
 	private User updated_by;
+	@JsonIgnore
 	private String updated_on;
 	private Boolean is_favorite;
 	

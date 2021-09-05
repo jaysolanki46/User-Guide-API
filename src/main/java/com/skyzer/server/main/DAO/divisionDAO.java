@@ -49,19 +49,21 @@ public class divisionDAO {
 		return null;
 	}
 	
-	public Division find(Integer id) throws SQLException {
+	public Division find(Integer divisionAccount) throws SQLException {
 		
 		try {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("select * from divisions where id = ?");
-			ps.setInt(1, id);
+			ps = cnn.prepareStatement("select * from divisions where division = ?");
+			ps.setInt(1, divisionAccount);
 			rs = ps.executeQuery();
 			
 			if (rs.next()) 
 				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
-
+			else
+				this.division = null;
+			
 			return this.division;
 			
 		} catch (Exception e) {

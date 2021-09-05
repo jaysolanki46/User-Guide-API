@@ -51,7 +51,7 @@ public class UserController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/users")
+	@PostMapping("skyzer-guide/user")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 	 	
 	 	try {
