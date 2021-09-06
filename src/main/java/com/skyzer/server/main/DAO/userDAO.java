@@ -74,8 +74,13 @@ public class userDAO {
 				this.user.setId(rs.getInt("id"));
 				this.user.setImage(rs.getString("image"));
 				this.user.setUsername(rs.getString("username"));
-				this.user.setPassword(rs.getString("pass"));
+				this.user.setEmail(rs.getString("email"));
+				//this.user.setPassword(rs.getString("pass"));
+				this.user.setPassword("***");
 				this.user.setDivision(divisionDAO.find(rs.getInt("division")));
+				this.user.setCreated_on(rs.getString("created_on"));
+				this.user.setUpdated_on(rs.getString("updated_on"));
+				this.user.setIs_active(rs.getBoolean("is_active"));
 			}
 
 			return this.user;
@@ -94,12 +99,13 @@ public class userDAO {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("insert into users (image, username, pass, division) "
-					+ "values (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			ps = cnn.prepareStatement("insert into users (image, username, email, pass, division) "
+					+ "values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, user.getImage());
 			ps.setString(2, user.getUsername());
-			ps.setString(3, user.getPassword());
-			ps.setInt(4, divisionDAO.findByDivision(user.getDivision().getDivision()).getId());
+			ps.setString(3, user.getEmail());
+			ps.setString(4, user.getPassword());
+			ps.setInt(5, divisionDAO.findByDivision(user.getDivision().getDivision()).getId());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			

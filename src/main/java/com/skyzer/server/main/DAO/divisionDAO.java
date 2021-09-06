@@ -55,7 +55,7 @@ public class divisionDAO {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("select * from divisions where division = ?");
+			ps = cnn.prepareStatement("select * from divisions where id = ?");
 			ps.setInt(1, divisionAccount);
 			rs = ps.executeQuery();
 			
