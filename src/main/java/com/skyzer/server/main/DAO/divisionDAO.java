@@ -136,7 +136,9 @@ public class divisionDAO {
 			
 			if (rs.next()) 
 				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
-
+			else
+				this.division = null;
+				
 			return this.division;
 			
 		} catch (Exception e) {

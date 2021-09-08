@@ -51,6 +51,20 @@ public class UserController {
 		} 
 	}
 	
+	@GetMapping("skyzer-guide/users/user/{email}")
+	public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+		
+		try {
+			User user = userDAO.findByEmail(email);
+
+			if(user == null) return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>(user, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
 	@PostMapping("skyzer-guide/user")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 	 	
@@ -60,6 +74,20 @@ public class UserController {
 	 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId()).toUri();
 		 	return ResponseEntity.created(location).build();
 	 		
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@GetMapping("skyzer-guide/users/forgetPassword/{email}")
+	public ResponseEntity<Object> forgetPassword(@PathVariable String email) {
+		
+		try {
+			Boolean isValidUser = userDAO.findByEmailForForgetPassword(email);
+
+			if(!isValidUser) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
+			
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 

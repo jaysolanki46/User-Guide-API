@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.skyzer.server.main.DBConfig;
+import com.skyzer.server.main.Email;
 import com.skyzer.server.main.bean.User;
 
 @Component
@@ -94,6 +95,61 @@ public class userDAO {
 		return null;
 	}
 	
+	public User findByEmail(String email) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			
+			ps = cnn.prepareStatement("select * from users where email = ?");
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				this.user = new User();
+				this.user.setId(rs.getInt("id"));
+			} else {
+				this.user = null;
+			}
+
+			return this.user;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cnn.close();
+		}
+		
+		return null;
+	}
+	
+	public Boolean findByEmailForForgetPassword(String email) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			
+			ps = cnn.prepareStatement("select * from users where email = ?");
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				System.err.println(rs.getString("email"));
+				/** FORGET PASSWORD EMAIL NEEDS TO BE DESIGNED*/
+				//new Email().sendSignUpAcknowledgement(rs.getString("email"));
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			cnn.close();
+		}
+	}
+	
 	public User create(User user) throws SQLException {
 		try {
 			new DBConfig();
@@ -112,6 +168,10 @@ public class userDAO {
 			if (rs.next()) {
 				this.user = new User();
 				this.user.setId(rs.getInt(1));
+				
+				/** SEND ACKLNOWLEDGEMENT */
+				new Email().sendSignUpAcknowledgement(user.getEmail());
+				System.err.println("Sent");
 			}
 
 			return this.user;
