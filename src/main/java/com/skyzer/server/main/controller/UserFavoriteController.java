@@ -24,14 +24,14 @@ public class UserFavoriteController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	@PostMapping("skyzer-guide/userFavorites/all")
-	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromAllList(@RequestBody UserFavorite userFavorite) {
+	@PostMapping("skyzer-guide/userFavorites/tetra/user/")
+	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromTetraList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
 	 		UserFavorite newUserFavorite =	userFavoriteDAO.create(userFavorite);
 	 		
 	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
-					referenceGuideFunctionDAO.findAllByUser(newUserFavorite.getUser().getId());
+					referenceGuideFunctionDAO.findAllTetraByUser(newUserFavorite.getUser().getId());
 	 		
 			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
 				return ResponseEntity.noContent().header("Content-Length", "0").build();
@@ -44,14 +44,54 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/all")
-	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromAllList(@RequestBody UserFavorite userFavorite) {
+	@DeleteMapping("skyzer-guide/userFavorites/tetra/user/")
+	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromTetraList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
 	 		UserFavorite deletedUserFavorite =	userFavoriteDAO.delete(userFavorite);
 	 		
 	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
-					referenceGuideFunctionDAO.findAllByUser(deletedUserFavorite.getUser().getId());
+					referenceGuideFunctionDAO.findAllTetraByUser(deletedUserFavorite.getUser().getId());
+	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@PostMapping("skyzer-guide/userFavorites/telium/user/")
+	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromTeliumList(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		UserFavorite newUserFavorite =	userFavoriteDAO.create(userFavorite);
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllTeliumByUser(newUserFavorite.getUser().getId());
+	 		
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@DeleteMapping("skyzer-guide/userFavorites/telium/user/")
+	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromTeliumList(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		UserFavorite deletedUserFavorite =	userFavoriteDAO.delete(userFavorite);
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctions = 
+					referenceGuideFunctionDAO.findAllTeliumByUser(deletedUserFavorite.getUser().getId());
 	 		
 			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
 				return ResponseEntity.noContent().header("Content-Length", "0").build();
@@ -64,6 +104,7 @@ public class UserFavoriteController {
 		} 
 	}
 
+	/*
 	@PostMapping("skyzer-guide/userFavorites/favorites")
 	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
 	 	
@@ -102,5 +143,5 @@ public class UserFavoriteController {
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
-	}
+	}*/
 }

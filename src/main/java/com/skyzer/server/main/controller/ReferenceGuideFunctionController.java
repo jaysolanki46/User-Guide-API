@@ -21,7 +21,7 @@ public class ReferenceGuideFunctionController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
+	/*@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
@@ -36,7 +36,7 @@ public class ReferenceGuideFunctionController {
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
-	}
+	}*/
 	
 	@GetMapping("skyzer-guide/referenceGuideFunctions/favorite/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllFavoritesReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
@@ -55,7 +55,41 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions")
+	@GetMapping("skyzer-guide/referenceGuideFunctions/tetra/user/{userId}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllTetraReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
+		
+		try {
+			List<ReferenceGuideFunction> referenceGuideFunctions = 
+									referenceGuideFunctionDAO.findAllTetraByUser(userId);
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@GetMapping("skyzer-guide/referenceGuideFunctions/telium/user/{userId}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getAllTeliumReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
+		
+		try {
+			List<ReferenceGuideFunction> referenceGuideFunctions = 
+									referenceGuideFunctionDAO.findAllTeliumByUser(userId);
+			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctions, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	/*@GetMapping("skyzer-guide/referenceGuideFunctions")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctions() {
 		
 		try {
@@ -83,7 +117,7 @@ public class ReferenceGuideFunctionController {
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
-	}
+	}*/
 	
 	/** POST PATTERN FROM POSTMAN
 		 {
@@ -104,7 +138,7 @@ public class ReferenceGuideFunctionController {
 		    "updated_on": "2021-06-23 12:30:01"
 		}
 	 */
-	@PostMapping("skyzer-guide/referenceGuideFunctions")
+	/*@PostMapping("skyzer-guide/referenceGuideFunctions")
 	public ResponseEntity<ReferenceGuideFunction> createReferenceGuideFunction(@RequestBody ReferenceGuideFunction referenceGuideFunction) {
 	 	
 	 	try {
@@ -129,5 +163,5 @@ public class ReferenceGuideFunctionController {
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
-	}
+	}*/
 }
