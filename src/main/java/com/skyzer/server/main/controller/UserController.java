@@ -105,4 +105,43 @@ public class UserController {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
 		} 
 	}
+	
+	@PostMapping("skyzer-guide/user/auth/")
+	public ResponseEntity<User> authUser(@RequestBody User user) {
+		
+		try {
+			User authUser = userDAO.auth(user);
+
+			if(authUser == null) return new ResponseEntity<>(authUser, HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>(authUser, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@PostMapping("skyzer-guide/user/image/")
+	public ResponseEntity<Object> uploadImage(@RequestBody User user) {
+		
+		try {
+			Boolean isUpload = userDAO.upload(user);
+
+			if(!isUpload) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	/** Fetch images from resource folder
+	@GetMapping(
+			value = "skyzer-guide/image/",
+			produces = MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] getImage() throws IOException {
+	    InputStream in = getClass()
+	      .getResourceAsStream("/images/profiles/sample.jpg");
+	    return IOUtils.toByteArray(in);
+	}
+	*/
 }

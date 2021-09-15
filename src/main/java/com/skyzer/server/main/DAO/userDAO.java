@@ -206,4 +206,67 @@ public class userDAO {
 		}
 		return false;
 	}
+	
+	public User auth(User user) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			
+			ps = cnn.prepareStatement("select * from users where username = ? and pass = ? and is_active = ?");
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setBoolean(3, true);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				this.user = new User();
+				this.user.setId(rs.getInt("id"));
+				this.user.setImage(rs.getString("image"));
+				this.user.setUsername(rs.getString("username"));
+				this.user.setEmail(rs.getString("email"));
+				//this.user.setPassword(rs.getString("pass"));
+				this.user.setPassword("***");
+				this.user.setDivision(divisionDAO.find(rs.getInt("division")));
+				this.user.setCreated_on(rs.getString("created_on"));
+				this.user.setUpdated_on(rs.getString("updated_on"));
+				this.user.setIs_active(rs.getBoolean("is_active"));
+			} else {
+				this.user = null;
+			}
+			
+			return this.user;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			cnn.close();
+		}
+	}
+	
+	public Boolean upload(User user) throws SQLException {
+		
+		try {
+			new DBConfig();
+			cnn = DBConfig.connection();
+			
+			ps = cnn.prepareStatement("Update users set image = ? where id = ?");
+			ps.setString(1, user.getImage());
+			ps.setInt(2, user.getId());
+			
+			if (ps.executeUpdate() == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			cnn.close();
+		}
+	}
+	
 }
