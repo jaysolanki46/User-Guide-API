@@ -134,14 +134,4 @@ public class UserController {
 		} 
 	}
 	
-	/** Fetch images from resource folder
-	@GetMapping(
-			value = "skyzer-guide/image/",
-			produces = MediaType.IMAGE_JPEG_VALUE)
-	public @ResponseBody byte[] getImage() throws IOException {
-	    InputStream in = getClass()
-	      .getResourceAsStream("/images/profiles/sample.jpg");
-	    return IOUtils.toByteArray(in);
-	}
-	*/
 }

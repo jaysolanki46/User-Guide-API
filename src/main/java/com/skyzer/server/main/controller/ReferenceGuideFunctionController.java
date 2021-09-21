@@ -59,6 +59,7 @@ public class ReferenceGuideFunctionController {
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllTetraReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
+			System.err.println(userId);
 			List<ReferenceGuideFunction> referenceGuideFunctions = 
 									referenceGuideFunctionDAO.findAllTetraByUser(userId);
 			if(referenceGuideFunctions.isEmpty() || referenceGuideFunctions == null) {
