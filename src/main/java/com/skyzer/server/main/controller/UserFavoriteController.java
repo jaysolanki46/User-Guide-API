@@ -104,6 +104,48 @@ public class UserFavoriteController {
 		} 
 	}
 
+	@GetMapping("skyzer-guide/userFavorites/user/{id}")
+	public ResponseEntity<List<ReferenceGuideFunction>> getOnlyFavouritesByUser(@PathVariable Integer id) {
+	 	
+	 	try {
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctionsByUserFavourites = 
+					referenceGuideFunctionDAO.findAllFavoritesByUser(id);
+	 		
+			if(referenceGuideFunctionsByUserFavourites.isEmpty() || referenceGuideFunctionsByUserFavourites == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctionsByUserFavourites, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@DeleteMapping("skyzer-guide/userFavorites/user/")
+	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavorite(@RequestBody UserFavorite userFavorite) {
+	 	
+	 	try {
+	 		
+	 		UserFavorite deletedUserFavorite =	userFavoriteDAO.delete(userFavorite);
+	 		
+	 		List<ReferenceGuideFunction> referenceGuideFunctionsByUserFavourites = 
+					referenceGuideFunctionDAO.findAllFavoritesByUser(deletedUserFavorite.getUser().getId());
+	 		
+			if(referenceGuideFunctionsByUserFavourites.isEmpty() || referenceGuideFunctionsByUserFavourites == null) {
+				return ResponseEntity.noContent().header("Content-Length", "0").build();
+			} else {
+				return new ResponseEntity<>(referenceGuideFunctionsByUserFavourites, HttpStatus.OK);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	
+	
 	/*
 	@PostMapping("skyzer-guide/userFavorites/favorites")
 	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
