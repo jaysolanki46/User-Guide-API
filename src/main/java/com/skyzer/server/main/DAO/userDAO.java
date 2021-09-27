@@ -76,8 +76,8 @@ public class userDAO {
 				this.user.setImage(rs.getString("image"));
 				this.user.setUsername(rs.getString("username"));
 				this.user.setEmail(rs.getString("email"));
-				//this.user.setPassword(rs.getString("pass"));
-				this.user.setPassword("***");
+				this.user.setPassword(rs.getString("pass"));
+				//this.user.setPassword("***");
 				this.user.setDivision(divisionDAO.find(rs.getInt("division")));
 				this.user.setCreated_on(rs.getString("created_on"));
 				this.user.setUpdated_on(rs.getString("updated_on"));
@@ -171,6 +171,8 @@ public class userDAO {
 				
 				/** SEND ACKLNOWLEDGEMENT */
 				new Email().sendSignUpAcknowledgement(user.getEmail());
+				/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
+				new Email().sendToSupportToActiveUser(user);
 				System.err.println("Sent");
 			}
 
