@@ -2,7 +2,7 @@ package com.skyzer.server.main.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Team_Credits {
+public class TeamCredits {
 	
 	private Integer id;
 	private String image_name;
@@ -14,7 +14,7 @@ public class Team_Credits {
 	@JsonIgnore
 	private User created_by;
 	
-	public Team_Credits(Integer id, String image_name, String title, String full_name, String linked_in, String gender,
+	public TeamCredits(Integer id, String image_name, String title, String full_name, String linked_in, String gender,
 			String created_on, User created_by) {
 		super();
 		this.id = id;
@@ -26,7 +26,7 @@ public class Team_Credits {
 		this.created_by = created_by;
 	}
 
-	public Team_Credits() {
+	public TeamCredits() {
 	}
 	
 	public String getImage_name() {
