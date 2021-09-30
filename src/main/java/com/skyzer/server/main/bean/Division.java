@@ -3,12 +3,12 @@ package com.skyzer.server.main.bean;
 public class Division {
 
 	private Integer id;
-	private Integer division;
+	private String division;
 	private String dealer_name;
 	
 	public Division() {
 	}
-	public Division(Integer id, Integer division, String dealer_name) {
+	public Division(Integer id, String division, String dealer_name) {
 		super();
 		this.id = id;
 		this.division = division;
@@ -20,10 +20,10 @@ public class Division {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getDivision() {
+	public String getDivision() {
 		return division;
 	}
-	public void setDivision(Integer division) {
+	public void setDivision(String division) {
 		this.division = division;
 	}
 	public String getDealer_name() {

@@ -34,7 +34,7 @@ public class divisionDAO {
 			rs = st.executeQuery("select * from divisions");
 			
 			while (rs.next()) {
-				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+				this.division = new Division(rs.getInt("id"), rs.getString("division"), rs.getString("dealer_name"));
 				divisions.add(this.division);
 			}
 
@@ -60,7 +60,7 @@ public class divisionDAO {
 			rs = ps.executeQuery();
 			
 			if (rs.next()) 
-				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+				this.division = new Division(rs.getInt("id"), rs.getString("division"), rs.getString("dealer_name"));
 			else
 				this.division = null;
 			
@@ -81,7 +81,7 @@ public class divisionDAO {
 			cnn = DBConfig.connection();
 			
 			ps = cnn.prepareStatement("insert into divisions (division, dealer_name) values (?, ?)", Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, division.getDivision());
+			ps.setString(1, division.getDivision());
 			ps.setString(2, division.getDealer_name());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
@@ -124,18 +124,18 @@ public class divisionDAO {
 		return false;
 	}
 	
-	public Division findByDivision(Integer division) throws SQLException {
+	public Division findByDivision(String division) throws SQLException {
 		
 		try {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
 			ps = cnn.prepareStatement("select * from divisions where division = ?");
-			ps.setInt(1, division);
+			ps.setString(1, division);
 			rs = ps.executeQuery();
 			
 			if (rs.next()) 
-				this.division = new Division(rs.getInt("id"), rs.getInt("division"), rs.getString("dealer_name"));
+				this.division = new Division(rs.getInt("id"), rs.getString("division"), rs.getString("dealer_name"));
 			else
 				this.division = null;
 				

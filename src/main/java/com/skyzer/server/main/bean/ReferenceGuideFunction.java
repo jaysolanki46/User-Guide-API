@@ -7,7 +7,9 @@ public class ReferenceGuideFunction {
 	private Integer id;
 	private String name;
 	private String short_solution;
+	@JsonIgnore
 	private String long_solution;
+	@JsonIgnore
 	private String note;
 	private Boolean is_telium;
 	private Boolean is_tetra;

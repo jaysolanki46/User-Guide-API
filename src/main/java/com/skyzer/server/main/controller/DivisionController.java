@@ -38,7 +38,7 @@ public class DivisionController {
 	}
 	
 	@GetMapping("skyzer-guide/divisions/division/{divisionAccount}")
-	public ResponseEntity<Division> getDivisionByDivision(@PathVariable Integer divisionAccount) {
+	public ResponseEntity<Division> getDivisionByDivision(@PathVariable String divisionAccount) {
 		
 		try {
 			Division division = divisionDAO.findByDivision(divisionAccount);
