@@ -170,7 +170,7 @@ public class userDAO {
 				this.user.setId(rs.getInt(1));
 				
 				/** SEND ACKLNOWLEDGEMENT */
-				new Email().sendSignUpAcknowledgement(user.getEmail());
+				new Email().sendSignUpAcknowledgement(user.getEmail(), user.getUsername());
 				/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
 				new Email().sendToSupportToActiveUser(user);
 				System.err.println("Sent");
