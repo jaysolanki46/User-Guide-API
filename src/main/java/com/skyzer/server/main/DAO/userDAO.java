@@ -135,8 +135,8 @@ public class userDAO {
 			
 			if (rs.next()) {
 				System.err.println(rs.getString("email"));
-				/** FORGET PASSWORD EMAIL NEEDS TO BE DESIGNED*/
-				//new Email().sendSignUpAcknowledgement(rs.getString("email"));
+				/** FORGET PASSWORD EMAIL */
+				new Email().sendForgotPasswordDetailsToUser(rs.getString("email"), rs.getString("username"), rs.getString("pass"));
 				return true;
 			} else {
 				return false;
