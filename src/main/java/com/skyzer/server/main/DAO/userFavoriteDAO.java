@@ -22,7 +22,6 @@ public class userFavoriteDAO {
 	
 	private List<UserFavorite> userFavorites;
 	private UserFavorite userFavorite;
-	private Integer deleteStatus;
 	
 	@Autowired
 	private userDAO userDAO;
@@ -124,7 +123,7 @@ public class userFavoriteDAO {
 			ps = cnn.prepareStatement("delete from user_favorites where user = ? and favorite_reference_guide_function = ?");
 			ps.setInt(1, userFavorite.getUser().getId());
 			ps.setInt(2, userFavorite.getFavorite_reference_guide_function().getId());
-			deleteStatus = ps.executeUpdate();
+			ps.executeUpdate();
 			
 			this.userFavorite = new UserFavorite();
 			this.userFavorite.setUser(userFavorite.getUser());
