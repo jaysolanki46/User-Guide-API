@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import com.skyzer.server.main.DBConfig;
 import com.skyzer.server.main.Email;
@@ -24,6 +28,7 @@ public class userDAO {
 	private List<User> users;
 	private User user;
 	private Integer deleteStatus;
+	private Email  email;
 	
 	@Autowired
 	private divisionDAO divisionDAO;
@@ -108,6 +113,9 @@ public class userDAO {
 			if (rs.next()) {
 				this.user = new User();
 				this.user.setId(rs.getInt("id"));
+				this.user.setEmail(rs.getString("email"));
+				this.user.setUsername(rs.getString("username"));
+				this.user.setImage(rs.getString("image"));
 			} else {
 				this.user = null;
 			}
@@ -169,10 +177,15 @@ public class userDAO {
 				this.user = new User();
 				this.user.setId(rs.getInt(1));
 				
+				
+				email = new Email();
 				/** SEND ACKLNOWLEDGEMENT */
-				new Email().sendSignUpAcknowledgement(user.getEmail(), user.getUsername());
+				email.sendSignUpAcknowledgement(user.getEmail(), user.getUsername());
+				
+				TimeUnit.SECONDS.sleep(1);
+				
 				/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
-				new Email().sendToSupportToActiveUser(user);
+				email.sendToSupportToActiveUser(user);
 				System.err.println("Sent");
 			}
 
@@ -209,42 +222,33 @@ public class userDAO {
 		return false;
 	}
 	
-	public User auth(User user) throws SQLException {
+	public User getUserByEmail(String email) throws SQLException {
 		
 		try {
 			new DBConfig();
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("select * from users where username = ? and pass = ? and is_active = ?");
-			ps.setString(1, user.getUsername());
-			ps.setString(2, user.getPassword());
-			ps.setBoolean(3, true);
+			ps = cnn.prepareStatement("select * from users where email = ? and is_active = ?");
+			ps.setString(1, email);
+			ps.setBoolean(2, true);
 			rs = ps.executeQuery();
 			
 			if (rs.next()) {
 				this.user = new User();
-				this.user.setId(rs.getInt("id"));
-				this.user.setImage(rs.getString("image"));
-				this.user.setUsername(rs.getString("username"));
 				this.user.setEmail(rs.getString("email"));
-				//this.user.setPassword(rs.getString("pass"));
-				this.user.setPassword("***");
-				this.user.setDivision(divisionDAO.find(rs.getInt("division")));
-				this.user.setCreated_on(rs.getString("created_on"));
-				this.user.setUpdated_on(rs.getString("updated_on"));
-				this.user.setIs_active(rs.getBoolean("is_active"));
+				this.user.setPassword(rs.getString("pass"));
 			} else {
 				this.user = null;
 			}
 			
 			return this.user;
-		
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		} finally {
 			cnn.close();
 		}
+		return user;
 	}
 	
 	public Boolean upload(User user) throws SQLException {
