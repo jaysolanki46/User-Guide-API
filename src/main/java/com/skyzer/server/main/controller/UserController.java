@@ -116,6 +116,20 @@ public class UserController {
 		} 
 	}
 	
+	@GetMapping("skyzer-guide/users/user/alreadyExist/{email}")
+	public ResponseEntity<Object> getUserAlreadyExist(@PathVariable String email) {
+		
+		try {
+			User user = userDAO.findByEmail(email);
+
+			if(user == null) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
 	@PostMapping("skyzer-guide/user")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 	 	

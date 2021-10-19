@@ -12,6 +12,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.skyzer.server.main.DBConfig;
 import com.skyzer.server.main.Email;
@@ -29,6 +31,8 @@ public class userDAO {
 	private User user;
 	private Integer deleteStatus;
 	private Email  email;
+	private PasswordEncoder passwordEncoder;
+	private String encodedPassword;
 	
 	@Autowired
 	private divisionDAO divisionDAO;
@@ -162,13 +166,15 @@ public class userDAO {
 		try {
 			new DBConfig();
 			cnn = DBConfig.connection();
+			this.passwordEncoder = new BCryptPasswordEncoder();
+			this.encodedPassword = this.passwordEncoder.encode(user.getPassword());
 			
 			ps = cnn.prepareStatement("insert into users (image, username, email, pass, division) "
 					+ "values (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, user.getImage());
 			ps.setString(2, user.getUsername());
 			ps.setString(3, user.getEmail());
-			ps.setString(4, user.getPassword());
+			ps.setString(4, this.encodedPassword);
 			ps.setInt(5, divisionDAO.findByDivision(user.getDivision().getDivision()).getId());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
@@ -184,6 +190,7 @@ public class userDAO {
 				
 				TimeUnit.SECONDS.sleep(1);
 				
+				email = new Email();
 				/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
 				email.sendToSupportToActiveUser(user);
 				System.err.println("Sent");

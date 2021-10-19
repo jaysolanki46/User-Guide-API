@@ -37,14 +37,14 @@ public class DivisionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/divisions/division/{divisionAccount}")
-	public ResponseEntity<Division> getDivisionByDivision(@PathVariable String divisionAccount) {
+	@GetMapping("skyzer-guide/divisions/division/validDivision/{divisionAccount}")
+	public ResponseEntity<Object> getValidDivisionByDivision(@PathVariable String divisionAccount) {
 		
 		try {
 			Division division = divisionDAO.findByDivision(divisionAccount);
 
-			if(division == null) return new ResponseEntity<>(division, HttpStatus.NOT_FOUND);
-			else return new ResponseEntity<>(division, HttpStatus.OK);
+			if(division == null) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
