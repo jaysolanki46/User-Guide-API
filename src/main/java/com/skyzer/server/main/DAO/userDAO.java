@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Component;
 import com.skyzer.server.main.DBConfig;
 import com.skyzer.server.main.Email;
 import com.skyzer.server.main.bean.User;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;    
 
 @Component
 public class userDAO {
@@ -33,6 +37,9 @@ public class userDAO {
 	private Email  email;
 	private PasswordEncoder passwordEncoder;
 	private String encodedPassword;
+	
+	private DateTimeFormatter dtf;
+	private LocalDateTime now;
 	
 	@Autowired
 	private divisionDAO divisionDAO;
@@ -135,20 +142,37 @@ public class userDAO {
 		return null;
 	}
 	
-	public Boolean findByEmailForForgetPassword(String email) throws SQLException {
+	public Boolean verifyUserAndSendCodeOnForgetPassword(String emailId) throws SQLException {
 		
 		try {
-			new DBConfig();
+			dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+			now = LocalDateTime.now();  
+			
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("select * from users where email = ?");
-			ps.setString(1, email);
+			ps = cnn.prepareStatement("select * from users where email = ? and is_active = ?");
+			ps.setString(1, emailId);
+			ps.setBoolean(2, true);
 			rs = ps.executeQuery();
+			
+			/** GENERATE RANDOM CODE */
+			Random rnd = new Random();
+			Integer code = rnd.nextInt(9999);
 			
 			if (rs.next()) {
 				System.err.println(rs.getString("email"));
-				/** FORGET PASSWORD EMAIL */
-				new Email().sendForgotPasswordDetailsToUser(rs.getString("email"), rs.getString("username"), rs.getString("pass"));
+				
+				/** INSERT CODE IN USER ROW  */
+				ps = cnn.prepareStatement("Update users set forget_code = ?, updated_on = ? where id = ?");
+				ps.setString(1, code.toString());
+				ps.setString(2, dtf.format(now));
+				ps.setInt(3, rs.getInt("id"));
+				ps.executeUpdate();
+				
+				/** SENDING CODE THROUGH EMAIL */
+				email = new Email();
+				email.sendForgotPasswordDetailsToUser(rs.getString("email"), rs.getString("username"), code.toString());
+
 				return true;
 			} else {
 				return false;
@@ -162,9 +186,68 @@ public class userDAO {
 		}
 	}
 	
+	public Boolean verifyUserEmailAndCode(User user) throws SQLException {
+		
+		try {
+			cnn = DBConfig.connection();
+			dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+			now = LocalDateTime.now(); 
+			
+			ps = cnn.prepareStatement("select * from users where email = ? and forget_code = ? and is_active = ?");
+			ps.setString(1, user.getEmail());
+			ps.setString(2, user.getForget_code());
+			ps.setBoolean(3, true);
+			rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				
+				/** RESET CODE IN USER ROW  */
+				ps = cnn.prepareStatement("Update users set forget_code = ?, updated_on = ? where id = ?");
+				ps.setString(1, null);
+				ps.setString(2, dtf.format(now));
+				ps.setInt(3, rs.getInt("id"));
+				ps.executeUpdate();
+				
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			cnn.close();
+		}
+	}
+	
+	public Boolean resetPassword(User user) throws SQLException {
+		
+		try {
+			cnn = DBConfig.connection();
+			dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+			now = LocalDateTime.now(); 
+			this.passwordEncoder = new BCryptPasswordEncoder();
+			this.encodedPassword = this.passwordEncoder.encode(user.getPassword());
+			
+			ps = cnn.prepareStatement("Update users set pass = ?, updated_on = ? where email = ?");
+			ps.setString(1, this.encodedPassword);
+			ps.setString(2, dtf.format(now));
+			ps.setString(3, user.getEmail());
+			ps.executeUpdate();
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			cnn.close();
+		}
+	}
+	
 	public User create(User user) throws SQLException {
 		try {
-			new DBConfig();
 			cnn = DBConfig.connection();
 			this.passwordEncoder = new BCryptPasswordEncoder();
 			this.encodedPassword = this.passwordEncoder.encode(user.getPassword());
@@ -261,12 +344,16 @@ public class userDAO {
 	public Boolean upload(User user) throws SQLException {
 		
 		try {
-			new DBConfig();
+			dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+			now = LocalDateTime.now(); 
+			
 			cnn = DBConfig.connection();
 			
-			ps = cnn.prepareStatement("Update users set image = ? where id = ?");
+			ps = cnn.prepareStatement("Update users set image = ?, updated_on = ? where id = ?");
 			ps.setString(1, user.getImage());
-			ps.setInt(2, user.getId());
+			ps.setString(2, dtf.format(now));
+			ps.setInt(3, user.getId());
+			
 			
 			if (ps.executeUpdate() == 1) {
 				return true;

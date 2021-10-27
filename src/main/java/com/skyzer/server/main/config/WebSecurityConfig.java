@@ -57,7 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/authenticate").permitAll()
 				.antMatchers("/skyzer-guide/divisions/division/validDivision/{divisionAccount}").permitAll()
 				.antMatchers("/skyzer-guide/users/user/alreadyExist/{email}").permitAll()
+				.antMatchers("/skyzer-guide/images/team/{name}").permitAll()
 				.antMatchers("/skyzer-guide/user").permitAll()
+				.antMatchers("/skyzer-guide/users/verifyUserAndSendCodeOnForgetPassword/{email}").permitAll()
+				.antMatchers("/skyzer-guide/users/verifyUserEmailAndCode").permitAll()
+				.antMatchers("/skyzer-guide/users/resetPassword").permitAll()
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

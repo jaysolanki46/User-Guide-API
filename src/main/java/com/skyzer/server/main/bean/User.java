@@ -11,12 +11,13 @@ public class User {
 	private String created_on;
 	private String updated_on;
 	private Boolean is_active;
+	private String forget_code;
 	
 	public User() {
 	}
 
 	public User(Integer id, String image, String username, String email, String password, Division division,
-			String created_on, String updated_on, Boolean is_active) {
+			String created_on, String updated_on, Boolean is_active, String forget_code) {
 		super();
 		this.id = id;
 		this.image = image;
@@ -27,6 +28,7 @@ public class User {
 		this.created_on = created_on;
 		this.updated_on = updated_on;
 		this.is_active = is_active;
+		this.forget_code = forget_code;
 	}
 
 	public Integer getId() {
@@ -101,11 +103,19 @@ public class User {
 		this.is_active = is_active;
 	}
 
+	public String getForget_code() {
+		return forget_code;
+	}
+
+	public void setForget_code(String forget_code) {
+		this.forget_code = forget_code;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", image=" + image + ", username=" + username + ", email=" + email + ", password="
 				+ password + ", division=" + division + ", created_on=" + created_on + ", updated_on=" + updated_on
-				+ ", is_active=" + is_active + "]";
+				+ ", is_active=" + is_active + ", forget_code=" + forget_code + "]";
 	}
-	
+
 }

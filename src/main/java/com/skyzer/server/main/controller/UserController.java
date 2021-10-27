@@ -144,13 +144,41 @@ public class UserController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/users/forgetPassword/{email}")
-	public ResponseEntity<Object> forgetPassword(@PathVariable String email) {
+	@GetMapping("skyzer-guide/users/verifyUserAndSendCodeOnForgetPassword/{email}")
+	public ResponseEntity<Object> verifyUserAndSendCodeOnForgetPassword(@PathVariable String email) {
 		
 		try {
-			Boolean isValidUser = userDAO.findByEmailForForgetPassword(email);
+			Boolean isValidUser = userDAO.verifyUserAndSendCodeOnForgetPassword(email);
 
 			if(!isValidUser) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@PostMapping("skyzer-guide/users/verifyUserEmailAndCode")
+	public ResponseEntity<Object> verifyUserEmailAndCode(@RequestBody User user) {
+		
+		try {
+			Boolean isValidUser = userDAO.verifyUserEmailAndCode(user);
+
+			if(!isValidUser) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+			else return new ResponseEntity<>("", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return ResponseEntity.internalServerError().header("Content-Length", "0").build();
+		} 
+	}
+	
+	@PostMapping("skyzer-guide/users/resetPassword")
+	public ResponseEntity<Object> resetPassword(@RequestBody User user) {
+		
+		try {
+			Boolean isSuccess = userDAO.resetPassword(user);
+
+			if(!isSuccess) return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
 			else return new ResponseEntity<>("", HttpStatus.OK);
 			
 		} catch (Exception e) {
