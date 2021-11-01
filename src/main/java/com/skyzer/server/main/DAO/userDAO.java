@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import javax.mail.Transport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -160,7 +164,6 @@ public class userDAO {
 			Integer code = rnd.nextInt(9999);
 			
 			if (rs.next()) {
-				System.err.println(rs.getString("email"));
 				
 				/** INSERT CODE IN USER ROW  */
 				ps = cnn.prepareStatement("Update users set forget_code = ?, updated_on = ? where id = ?");
@@ -267,15 +270,26 @@ public class userDAO {
 				this.user.setId(rs.getInt(1));
 				
 				
-				email = new Email();
-				/** SEND ACKLNOWLEDGEMENT */
-				email.sendSignUpAcknowledgement(user.getEmail(), user.getUsername());
+		           ExecutorService emailExecutor = Executors.newCachedThreadPool();
+		           emailExecutor.execute(new Runnable() {
+		               @Override
+		               public void run() {
+		                   try {
+								email = new Email();
+								/** SEND ACKLNOWLEDGEMENT */
+								email.sendSignUpAcknowledgement(user.getEmail(), user.getUsername());
+
+								TimeUnit.SECONDS.sleep(5);
+
+								email = new Email();
+								/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
+								email.sendToSupportToActiveUser(user);
+		                   } catch (Exception e) {
+		                	   e.printStackTrace();
+		                   }
+		               }
+		           });
 				
-				TimeUnit.SECONDS.sleep(1);
-				
-				email = new Email();
-				/** SEND EMAIL FOR ACTIVE THIS USER TO SUPPORT */
-				email.sendToSupportToActiveUser(user);
 				System.err.println("Sent");
 			}
 
