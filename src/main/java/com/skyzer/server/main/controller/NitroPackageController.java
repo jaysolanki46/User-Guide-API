@@ -14,7 +14,7 @@ public class NitroPackageController {
 	@Autowired
 	private nitroPackageDAO nitroPackageDAO;
 	
-	@GetMapping("skyzer-guide/nitroPackage/sendLink/{email}")
+	@GetMapping("/nitroPackage/sendLink/{email}")
 	public ResponseEntity<Object> getDivisionByDivision(@PathVariable String email) {
 		
 		try {

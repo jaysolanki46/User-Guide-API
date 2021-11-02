@@ -24,7 +24,7 @@ public class UserFavoriteController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	@PostMapping("skyzer-guide/userFavorites/tetra/user/")
+	@PostMapping("/userFavorites/tetra/user/")
 	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromTetraList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -44,7 +44,7 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/tetra/user/")
+	@DeleteMapping("/userFavorites/tetra/user/")
 	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromTetraList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -64,7 +64,7 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/userFavorites/telium/user/")
+	@PostMapping("/userFavorites/telium/user/")
 	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromTeliumList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -84,7 +84,7 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/telium/user/")
+	@DeleteMapping("/userFavorites/telium/user/")
 	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromTeliumList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -104,7 +104,7 @@ public class UserFavoriteController {
 		} 
 	}
 
-	@GetMapping("skyzer-guide/userFavorites/user/{id}")
+	@GetMapping("/userFavorites/user/{id}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getOnlyFavouritesByUser(@PathVariable Integer id) {
 	 	
 	 	try {
@@ -123,7 +123,7 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/user/")
+	@DeleteMapping("/userFavorites/user/")
 	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavorite(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -147,7 +147,7 @@ public class UserFavoriteController {
 	
 	
 	/*
-	@PostMapping("skyzer-guide/userFavorites/favorites")
+	@PostMapping("/userFavorites/favorites")
 	public ResponseEntity<List<ReferenceGuideFunction>> createUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {
@@ -167,7 +167,7 @@ public class UserFavoriteController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/userFavorites/favorites")
+	@DeleteMapping("/userFavorites/favorites")
 	public ResponseEntity<List<ReferenceGuideFunction>> deleteUserFavoriteFromFavoriteList(@RequestBody UserFavorite userFavorite) {
 	 	
 	 	try {

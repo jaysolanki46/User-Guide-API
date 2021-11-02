@@ -72,7 +72,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("skyzer-guide/users")
+	@GetMapping("/users")
 	public ResponseEntity<List<User>> getAllUsers() {
 		
 		try {
@@ -88,7 +88,7 @@ public class UserController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/users/{id}")
+	@GetMapping("/users/{id}")
 	public ResponseEntity<User> getUser(@PathVariable Integer id) {
 		
 		try {
@@ -102,7 +102,7 @@ public class UserController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/users/user/{email}")
+	@GetMapping("/users/user/{email}")
 	public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
 		
 		try {
@@ -116,7 +116,7 @@ public class UserController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/users/user/alreadyExist/{email}")
+	@GetMapping("/users/user/alreadyExist/{email}")
 	public ResponseEntity<Object> getUserAlreadyExist(@PathVariable String email) {
 		
 		try {
@@ -130,7 +130,7 @@ public class UserController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/user")
+	@PostMapping("/user")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 	 	
 	 	try {
@@ -144,7 +144,7 @@ public class UserController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/users/verifyUserAndSendCodeOnForgetPassword/{email}")
+	@GetMapping("/users/verifyUserAndSendCodeOnForgetPassword/{email}")
 	public ResponseEntity<Object> verifyUserAndSendCodeOnForgetPassword(@PathVariable String email) {
 		
 		try {
@@ -158,7 +158,7 @@ public class UserController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/users/verifyUserEmailAndCode")
+	@PostMapping("/users/verifyUserEmailAndCode")
 	public ResponseEntity<Object> verifyUserEmailAndCode(@RequestBody User user) {
 		
 		try {
@@ -172,7 +172,7 @@ public class UserController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/users/resetPassword")
+	@PostMapping("/users/resetPassword")
 	public ResponseEntity<Object> resetPassword(@RequestBody User user) {
 		
 		try {
@@ -186,7 +186,7 @@ public class UserController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/users/{id}")
+	@DeleteMapping("/users/{id}")
 	public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
 		try {
 	 		boolean isDeleted =	userDAO.delete(id);
@@ -199,7 +199,7 @@ public class UserController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/user/image/")
+	@PostMapping("/user/image/")
 	public ResponseEntity<Object> uploadImage(@RequestBody User user) {
 		
 		try {

@@ -23,7 +23,7 @@ public class TeamController {
 	@Autowired
 	private teamDAO teamDAO;
 	
-	@GetMapping("skyzer-guide/team")
+	@GetMapping("/team")
 	public ResponseEntity<List<Team>> getAllTeam() {
 		
 		try {
@@ -41,7 +41,7 @@ public class TeamController {
 	}
 	
 	@GetMapping(
-			value = "skyzer-guide/images/team/{name}",
+			value = "/images/team/{name}",
 			produces = MediaType.IMAGE_JPEG_VALUE)
 	public @ResponseBody byte[] getImage(@PathVariable String name) throws IOException {
 	    InputStream in = getClass()

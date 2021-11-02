@@ -15,7 +15,7 @@ public class TeamCreditsController {
 	@Autowired
 	private teamCreditsDAO teamCreditsDAO;
 	
-	@GetMapping("skyzer-guide/teamCredits")
+	@GetMapping("/teamCredits")
 	public ResponseEntity<List<Team>> getAllTeam() {
 		
 		try {

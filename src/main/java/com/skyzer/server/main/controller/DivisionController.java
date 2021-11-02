@@ -21,7 +21,7 @@ public class DivisionController {
 	@Autowired
 	private divisionDAO divisionDAO;
 	
-	@GetMapping("skyzer-guide/divisions")
+	@GetMapping("/divisions")
 	public ResponseEntity<List<Division>> getAllDivisions() {
 		
 		try {
@@ -37,7 +37,7 @@ public class DivisionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/divisions/division/validDivision/{divisionAccount}")
+	@GetMapping("/divisions/division/validDivision/{divisionAccount}")
 	public ResponseEntity<Object> getValidDivisionByDivision(@PathVariable String divisionAccount) {
 		
 		try {
@@ -51,7 +51,7 @@ public class DivisionController {
 		} 
 	}
 	
-	@PostMapping("skyzer-guide/divisions")
+	@PostMapping("/divisions")
 	public ResponseEntity<Division> createDivision(@RequestBody Division division) {
 	 	
 	 	try {
@@ -65,7 +65,7 @@ public class DivisionController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/divisions/{id}")
+	@DeleteMapping("/divisions/{id}")
 	public ResponseEntity<Object> deleteDivision(@PathVariable Integer id) {
 		try {
 	 		boolean isDeleted =	divisionDAO.delete(id);

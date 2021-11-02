@@ -15,7 +15,7 @@ public class BulletinController {
 	@Autowired
 	private bulletinDAO bulletinDAO;
 	
-	@GetMapping("skyzer-guide/bulletins")
+	@GetMapping("/bulletins")
 	public ResponseEntity<List<Bulletin>> getAllBulletin() {
 		
 		try {

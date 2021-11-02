@@ -16,7 +16,7 @@ public class ReferenceGuideFunctionController {
 	@Autowired
 	private referenceGuideFunctionDAO referenceGuideFunctionDAO;
 	
-	/*@GetMapping("skyzer-guide/referenceGuideFunctions/user/{userId}")
+	/*@GetMapping("/referenceGuideFunctions/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
@@ -33,7 +33,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}*/
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/favorite/user/{userId}")
+	@GetMapping("/referenceGuideFunctions/favorite/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllFavoritesReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
@@ -50,7 +50,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/tetra/user/{userId}")
+	@GetMapping("/referenceGuideFunctions/tetra/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllTetraReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
@@ -67,7 +67,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/telium/user/{userId}")
+	@GetMapping("/referenceGuideFunctions/telium/user/{userId}")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllTeliumReferenceGuideFunctionsByUser(@PathVariable Integer userId) {
 		
 		try {
@@ -84,7 +84,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	/*@GetMapping("skyzer-guide/referenceGuideFunctions")
+	/*@GetMapping("/referenceGuideFunctions")
 	public ResponseEntity<List<ReferenceGuideFunction>> getAllReferenceGuideFunctions() {
 		
 		try {
@@ -100,7 +100,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@GetMapping("skyzer-guide/referenceGuideFunctions/{id}")
+	@GetMapping("/referenceGuideFunctions/{id}")
 	public ResponseEntity<ReferenceGuideFunction> getReferenceGuideFunction(@PathVariable Integer id) {
 		
 		try {
@@ -133,7 +133,7 @@ public class ReferenceGuideFunctionController {
 		    "updated_on": "2021-06-23 12:30:01"
 		}
 	 */
-	/*@PostMapping("skyzer-guide/referenceGuideFunctions")
+	/*@PostMapping("/referenceGuideFunctions")
 	public ResponseEntity<ReferenceGuideFunction> createReferenceGuideFunction(@RequestBody ReferenceGuideFunction referenceGuideFunction) {
 	 	
 	 	try {
@@ -147,7 +147,7 @@ public class ReferenceGuideFunctionController {
 		} 
 	}
 	
-	@DeleteMapping("skyzer-guide/referenceGuideFunctions/{id}")
+	@DeleteMapping("/referenceGuideFunctions/{id}")
 	public ResponseEntity<Object> deleteReferenceGuideFunction(@PathVariable Integer id) {
 		try {
 	 		boolean isDeleted =	referenceGuideFunctionDAO.delete(id);
