@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/verifyUserAndSendCodeOnForgetPassword/{email}").permitAll()
 				.antMatchers("/users/verifyUserEmailAndCode").permitAll()
 				.antMatchers("/users/resetPassword").permitAll()
-				.antMatchers("/log").permitAll()
+				.antMatchers("/logs/error").permitAll()
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
