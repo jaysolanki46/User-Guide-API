@@ -155,7 +155,14 @@ public class userDAO {
 			
 			/** GENERATE RANDOM CODE */
 			Random rnd = new Random();
-			Integer code = rnd.nextInt(9999);
+			Integer code = 0;
+			
+			do {
+				code = rnd.nextInt(9999); 
+			} while (code.toString().length() != 4);
+			
+			System.out.println(code);
+			
 			
 			if (rs.next()) {
 				
@@ -168,7 +175,7 @@ public class userDAO {
 				
 				/** SENDING CODE THROUGH EMAIL */
 				email = new Email();
-				email.sendForgotPasswordDetailsToUser(rs.getString("email"), rs.getString("username"), code.toString());
+				email.sendForgotPasswordCodeToUser(rs.getString("email"), rs.getString("username"), code.toString());
 
 				return true;
 			} else {

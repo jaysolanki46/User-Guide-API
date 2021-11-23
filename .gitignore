@@ -37,3 +37,6 @@ src/main/java/com/skyzer/server/main/DBConfig.java
 
 ## Email File ##
 src/main/java/com/skyzer/server/main/Email.java
+
+## Log File ##
+logs/
