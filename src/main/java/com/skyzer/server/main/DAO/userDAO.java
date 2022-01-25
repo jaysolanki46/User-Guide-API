@@ -128,7 +128,6 @@ public class userDAO {
 			} else {
 				this.user = null;
 			}
-
 			return this.user;
 			
 		} catch (Exception e) {
